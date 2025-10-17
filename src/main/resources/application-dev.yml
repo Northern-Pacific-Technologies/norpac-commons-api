@@ -1,0 +1,22 @@
+# Set as [environment]-schema in SPRING_PROFILES_ACTIVE
+# Environments include: local, dev, docker, prod. See MultiTenantConfiguration.java
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://postgres:5432/norpac?currentSchema=norpac_commons
+    username: web_update
+    password: 
+    
+logging:
+  level:
+    com.norpactech.nc: INFO
+    com.zaxxer.hikari: WARN
+    org.springframework.security: WARN
+    org.springframework.security.oauth2: WARN
+
+cognito:
+  region: 'us-west-2'
+  user-pool-id: 'us-west-2_gHVlOsqkP'
+  user-pool-client-id: '4sknuarei0bakajuguv1us2mop'
+  user-pool-client-secret: ${COGNITO_CLIENT_SECRET}

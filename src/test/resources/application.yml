@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: norpac-commons
+  datasource:
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 50
+      idle-timeout: 30000
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      leak-detection-threshold: 2000
+      pool-name: MyHikariCP		
+
+  jpa:
+    show-sql: false
+    generate-ddl: false
+    properties:
+      hibernate:
+        ddl-auto: none
+        dialect: org.hibernate.dialect.PostgreSQLDialect    
+
+server:
+  port: ${PORT:8091}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+norpac-commons:
+  version: '@project.version@'  

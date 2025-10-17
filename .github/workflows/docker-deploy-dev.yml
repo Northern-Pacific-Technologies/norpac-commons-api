@@ -1,0 +1,21 @@
+name: Docker Deploy into Dev
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Set up SSH
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.V02_SERVER_SSH_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan -H v02.norpactech.com >> ~/.ssh/known_hosts
+
+    - name: Run Bash Script on Dev Server
+      run: |
+        ssh ubuntu@v02.norpactech.com 'bash ~/norpac-commons-deploy/united-bins-api/dev/deploy.sh'

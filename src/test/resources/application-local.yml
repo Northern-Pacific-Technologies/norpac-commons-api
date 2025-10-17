@@ -1,0 +1,19 @@
+# Set as [environment]-schema in SPRING_PROFILES_ACTIVE
+# Environments include: local, dev, docker, prod. See MultiTenantConfiguration.java
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/norpac?currentSchema=norpac_commons
+#    url: jdbc:postgresql://v02.norpactech.com:5432/norpac?currentSchema=norpac_commons
+    username: norpac 
+    password: 
+    
+pareto-factory:
+  # Not used in local environment	
+  template-path:
+
+cognito:
+  region: 'us-west-2'
+  user-pool-id: 'us-west-2_kYxBT6G5H' 
+  user-pool-client-id: '4sknuarei0bakajuguv1us2mop' 

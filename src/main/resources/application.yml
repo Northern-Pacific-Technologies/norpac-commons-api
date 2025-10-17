@@ -1,0 +1,39 @@
+spring:
+  application:
+    name: united-bins-csr-api
+  jackson:
+    time-zone: UTC
+    date-format: yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
+    
+  datasource:
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 50
+      idle-timeout: 30000
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      leak-detection-threshold: 2000
+      pool-name: MyHikariCP		
+ 
+  jpa:
+    show-sql: false
+    generate-ddl: false
+    properties:
+      hibernate:
+        ddl-auto: none
+        dialect: org.hibernate.dialect.PostgreSQLDialect    
+
+server:
+  port: ${PORT:8080}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+springdoc:
+  packages-to-scan: com.norpactech.ub.api.controller.v01
+
+united-bins:
+  version: '@project.version@'

@@ -1,0 +1,5 @@
+{"properties": [{
+  "name": "united-bins.version",
+  "type": "java.lang.String",
+  "description": "A description for 'united-bins.version'"
+}]}
