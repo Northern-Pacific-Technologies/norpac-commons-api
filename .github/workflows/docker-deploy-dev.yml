@@ -18,4 +18,4 @@ jobs:
 
     - name: Run Bash Script on Dev Server
       run: |
-        ssh ubuntu@v02.norpactech.com 'bash ~/norpac-commons-deploy/united-bins-api/dev/deploy.sh'
+        ssh ubuntu@v02.norpactech.com 'bash ~/norpac-commons-deploy/norpac-commons-api/dev/deploy.sh'
