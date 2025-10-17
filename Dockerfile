@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
-ARG ARTIFACT=united-bins-csr-api
+ARG ARTIFACT=norpac-commons-api
 ARG VERSION=0.0.1-SNAPSHOT
 COPY target/${ARTIFACT}-${VERSION}.jar app.jar
 
