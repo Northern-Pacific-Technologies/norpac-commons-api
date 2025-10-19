@@ -4,10 +4,10 @@ package com.norpactech.nc.api.model;
  *  
  * For license details, see the LICENSE file in this project root.
  */
-import com.google.gson.Gson;
 import com.norpactech.nc.model.BaseModel;
 import java.lang.Boolean;
 import java.lang.Double;
+import java.lang.Integer;
 import java.lang.String;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -15,40 +15,44 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- * API Model Class: Pricing - Created pricing from Import
+ * API Model Class: Coupon - Created coupon from Import
  */
-public class Pricing extends BaseModel {
+public class Coupon extends BaseModel {
 
   private UUID id;
-  private UUID idProduct;
-  private UUID idRtPricingType;
-  private UUID idRtBillingPeriod;
-  private UUID idRtCurrencyCode;
+  private UUID idTenant;
+  private UUID idRtCouponType;
+  private String name;
+  private String code;
+  private String description;
   private Double amount;
+  private Integer maxUses;
+  private Integer maxUsesPerCustomer;
   private LocalDateTime validFrom;
   private LocalDateTime validTo;
-  private Gson metadata;
   private Timestamp createdAt;
   private String createdBy;
   private Timestamp updatedAt;
   private String updatedBy;
   private Boolean isActive;
 
-  public Pricing () {}
-  public Pricing (Object obj) {
+  public Coupon () {}
+  public Coupon (Object obj) {
     super(obj);
   }
 
-  public Pricing (
+  public Coupon (
     UUID id,
-    UUID idProduct,
-    UUID idRtPricingType,
-    UUID idRtBillingPeriod,
-    UUID idRtCurrencyCode,
+    UUID idTenant,
+    UUID idRtCouponType,
+    String name,
+    String code,
+    String description,
     Double amount,
+    Integer maxUses,
+    Integer maxUsesPerCustomer,
     LocalDateTime validFrom,
     LocalDateTime validTo,
-    Gson metadata,
     Timestamp createdAt,
     String createdBy,
     Timestamp updatedAt,
@@ -56,14 +60,16 @@ public class Pricing extends BaseModel {
     Boolean isActive)
  {
     this.id = id;
-    this.idProduct = idProduct;
-    this.idRtPricingType = idRtPricingType;
-    this.idRtBillingPeriod = idRtBillingPeriod;
-    this.idRtCurrencyCode = idRtCurrencyCode;
+    this.idTenant = idTenant;
+    this.idRtCouponType = idRtCouponType;
+    this.name = name;
+    this.code = code;
+    this.description = description;
     this.amount = amount;
+    this.maxUses = maxUses;
+    this.maxUsesPerCustomer = maxUsesPerCustomer;
     this.validFrom = validFrom;
     this.validTo = validTo;
-    this.metadata = metadata;
     this.createdAt = createdAt;
     this.createdBy = createdBy;
     this.updatedAt = updatedAt;
@@ -73,10 +79,10 @@ public class Pricing extends BaseModel {
 
   public static Map<String, Object> queryRequest(Map<String, String> queryParams) throws Exception {
     
-    var matchedParams = paramMatcher(queryParams, Pricing.class);
+    var matchedParams = paramMatcher(queryParams, Coupon.class);
     matchedParams.put("sql", 
-      "SELECT norpac_commons.pricing.* " + 
-      "FROM norpac_commons.pricing");
+      "SELECT norpac_commons.coupon.* " + 
+      "FROM norpac_commons.coupon");
     return matchedParams;
   }
 
@@ -90,36 +96,44 @@ public class Pricing extends BaseModel {
     return this.id = id;
   }    
     
-  public UUID getIdProduct() {
-    return this.idProduct;
+  public UUID getIdTenant() {
+    return this.idTenant;
   }
     
-  public UUID setIdProduct(UUID idProduct) {
-    return this.idProduct = idProduct;
+  public UUID setIdTenant(UUID idTenant) {
+    return this.idTenant = idTenant;
   }    
     
-  public UUID getIdRtPricingType() {
-    return this.idRtPricingType;
+  public UUID getIdRtCouponType() {
+    return this.idRtCouponType;
   }
     
-  public UUID setIdRtPricingType(UUID idRtPricingType) {
-    return this.idRtPricingType = idRtPricingType;
+  public UUID setIdRtCouponType(UUID idRtCouponType) {
+    return this.idRtCouponType = idRtCouponType;
   }    
     
-  public UUID getIdRtBillingPeriod() {
-    return this.idRtBillingPeriod;
+  public String getName() {
+    return this.name;
   }
     
-  public UUID setIdRtBillingPeriod(UUID idRtBillingPeriod) {
-    return this.idRtBillingPeriod = idRtBillingPeriod;
+  public String setName(String name) {
+    return this.name = name;
   }    
     
-  public UUID getIdRtCurrencyCode() {
-    return this.idRtCurrencyCode;
+  public String getCode() {
+    return this.code;
   }
     
-  public UUID setIdRtCurrencyCode(UUID idRtCurrencyCode) {
-    return this.idRtCurrencyCode = idRtCurrencyCode;
+  public String setCode(String code) {
+    return this.code = code;
+  }    
+    
+  public String getDescription() {
+    return this.description;
+  }
+    
+  public String setDescription(String description) {
+    return this.description = description;
   }    
     
   public Double getAmount() {
@@ -128,6 +142,22 @@ public class Pricing extends BaseModel {
     
   public Double setAmount(Double amount) {
     return this.amount = amount;
+  }    
+    
+  public Integer getMaxUses() {
+    return this.maxUses;
+  }
+    
+  public Integer setMaxUses(Integer maxUses) {
+    return this.maxUses = maxUses;
+  }    
+    
+  public Integer getMaxUsesPerCustomer() {
+    return this.maxUsesPerCustomer;
+  }
+    
+  public Integer setMaxUsesPerCustomer(Integer maxUsesPerCustomer) {
+    return this.maxUsesPerCustomer = maxUsesPerCustomer;
   }    
     
   public LocalDateTime getValidFrom() {
@@ -144,14 +174,6 @@ public class Pricing extends BaseModel {
     
   public LocalDateTime setValidTo(LocalDateTime validTo) {
     return this.validTo = validTo;
-  }    
-    
-  public Gson getMetadata() {
-    return this.metadata;
-  }
-    
-  public Gson setMetadata(Gson metadata) {
-    return this.metadata = metadata;
   }    
     
   public Timestamp getCreatedAt() {

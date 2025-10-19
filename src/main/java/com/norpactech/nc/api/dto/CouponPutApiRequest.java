@@ -4,8 +4,8 @@ package com.norpactech.nc.api.dto;
  *  
  * For license details, see the LICENSE file in this project root.
  */
-import com.google.gson.Gson;
 import java.lang.Double;
+import java.lang.Integer;
 import java.lang.String;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -17,38 +17,40 @@ import io.swagger.v3.oas.annotations.Hidden;
 /**
  * Put API Request
  * 
- * Created pricing from Import
+ * Created coupon from Import
  */
-public class PricingPutApiRequest {
+public class CouponPutApiRequest {
 
   private UUID id;
-  private UUID idProduct;
-  private UUID idRtPricingType;
-  private UUID idRtBillingPeriod;
-  private UUID idRtCurrencyCode;
+  private UUID idRtCouponType;
+  private String name;
+  private String code;
+  private String description;
   private Double amount;
+  private Integer maxUses;
+  private Integer maxUsesPerCustomer;
   private LocalDateTime validFrom;
   private LocalDateTime validTo;
-  private Gson metadata;
   private Timestamp updatedAt;
   private String updatedBy;
 
-  public PricingPutApiRequest () {}
+  public CouponPutApiRequest () {}
 
   @Hidden
   public Map<String, Object> getUpdateRequest() {
     
      var request = new LinkedHashMap<String, Object>();
-    request.put("sql", "SELECT norpac_commons.u_pricing(?,?,?,?,?,?,?,?,?,?,?)");
+    request.put("sql", "SELECT norpac_commons.u_coupon(?,?,?,?,?,?,?,?,?,?,?,?)");
     request.put("id", this.id);
-    request.put("idProduct", this.idProduct);
-    request.put("idRtPricingType", this.idRtPricingType);
-    request.put("idRtBillingPeriod", this.idRtBillingPeriod);
-    request.put("idRtCurrencyCode", this.idRtCurrencyCode);
+    request.put("idRtCouponType", this.idRtCouponType);
+    request.put("name", this.name);
+    request.put("code", this.code);
+    request.put("description", this.description);
     request.put("amount", this.amount);
+    request.put("maxUses", this.maxUses);
+    request.put("maxUsesPerCustomer", this.maxUsesPerCustomer);
     request.put("validFrom", this.validFrom);
     request.put("validTo", this.validTo);
-    request.put("metadata", this.metadata);
     request.put("updatedAt", this.updatedAt);
     request.put("updatedBy", this.updatedBy);
     return request;
@@ -64,36 +66,36 @@ public class PricingPutApiRequest {
     return this.id = id;
   }    
     
-  public UUID getIdProduct() {
-    return this.idProduct;
+  public UUID getIdRtCouponType() {
+    return this.idRtCouponType;
   }
     
-  public UUID setIdProduct(UUID idProduct) {
-    return this.idProduct = idProduct;
+  public UUID setIdRtCouponType(UUID idRtCouponType) {
+    return this.idRtCouponType = idRtCouponType;
   }    
     
-  public UUID getIdRtPricingType() {
-    return this.idRtPricingType;
+  public String getName() {
+    return this.name;
   }
     
-  public UUID setIdRtPricingType(UUID idRtPricingType) {
-    return this.idRtPricingType = idRtPricingType;
+  public String setName(String name) {
+    return this.name = name;
   }    
     
-  public UUID getIdRtBillingPeriod() {
-    return this.idRtBillingPeriod;
+  public String getCode() {
+    return this.code;
   }
     
-  public UUID setIdRtBillingPeriod(UUID idRtBillingPeriod) {
-    return this.idRtBillingPeriod = idRtBillingPeriod;
+  public String setCode(String code) {
+    return this.code = code;
   }    
     
-  public UUID getIdRtCurrencyCode() {
-    return this.idRtCurrencyCode;
+  public String getDescription() {
+    return this.description;
   }
     
-  public UUID setIdRtCurrencyCode(UUID idRtCurrencyCode) {
-    return this.idRtCurrencyCode = idRtCurrencyCode;
+  public String setDescription(String description) {
+    return this.description = description;
   }    
     
   public Double getAmount() {
@@ -102,6 +104,22 @@ public class PricingPutApiRequest {
     
   public Double setAmount(Double amount) {
     return this.amount = amount;
+  }    
+    
+  public Integer getMaxUses() {
+    return this.maxUses;
+  }
+    
+  public Integer setMaxUses(Integer maxUses) {
+    return this.maxUses = maxUses;
+  }    
+    
+  public Integer getMaxUsesPerCustomer() {
+    return this.maxUsesPerCustomer;
+  }
+    
+  public Integer setMaxUsesPerCustomer(Integer maxUsesPerCustomer) {
+    return this.maxUsesPerCustomer = maxUsesPerCustomer;
   }    
     
   public LocalDateTime getValidFrom() {
@@ -118,14 +136,6 @@ public class PricingPutApiRequest {
     
   public LocalDateTime setValidTo(LocalDateTime validTo) {
     return this.validTo = validTo;
-  }    
-    
-  public Gson getMetadata() {
-    return this.metadata;
-  }
-    
-  public Gson setMetadata(Gson metadata) {
-    return this.metadata = metadata;
   }    
     
   public Timestamp getUpdatedAt() {

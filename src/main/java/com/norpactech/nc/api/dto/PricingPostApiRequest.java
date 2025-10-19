@@ -20,7 +20,7 @@ import io.swagger.v3.oas.annotations.Hidden;
  */
  public class PricingPostApiRequest {
 
-  private UUID idServiceProduct;
+  private UUID idProduct;
   private UUID idRtPricingType;
   private UUID idRtBillingPeriod;
   private UUID idRtCurrencyCode;
@@ -37,7 +37,7 @@ import io.swagger.v3.oas.annotations.Hidden;
     
     var request = new LinkedHashMap<String, Object>();
     request.put("sql", "SELECT norpac_commons.i_pricing(?,?,?,?,?,?,?,?,?)");
-    request.put("idServiceProduct", this.idServiceProduct);
+    request.put("idProduct", this.idProduct);
     request.put("idRtPricingType", this.idRtPricingType);
     request.put("idRtBillingPeriod", this.idRtBillingPeriod);
     request.put("idRtCurrencyCode", this.idRtCurrencyCode);
@@ -51,12 +51,12 @@ import io.swagger.v3.oas.annotations.Hidden;
   
   // Getters and Setters...
     
-  public UUID getIdServiceProduct() {
-    return this.idServiceProduct;
+  public UUID getIdProduct() {
+    return this.idProduct;
   }
     
-  public UUID setIdServiceProduct(UUID idServiceProduct) {
-    return this.idServiceProduct = idServiceProduct;
+  public UUID setIdProduct(UUID idProduct) {
+    return this.idProduct = idProduct;
   }    
     
   public UUID getIdRtPricingType() {
