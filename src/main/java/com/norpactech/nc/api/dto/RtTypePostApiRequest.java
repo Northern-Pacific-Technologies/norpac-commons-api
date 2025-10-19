@@ -6,6 +6,7 @@ package com.norpactech.nc.api.dto;
  */
 import java.lang.String;
 import java.util.Map;
+import java.util.UUID;
 import java.util.LinkedHashMap;
 import io.swagger.v3.oas.annotations.Hidden;
 
@@ -16,6 +17,7 @@ import io.swagger.v3.oas.annotations.Hidden;
  */
  public class RtTypePostApiRequest {
 
+  private UUID idTenant;
   private String name;
   private String description;
   private String createdBy;
@@ -26,7 +28,8 @@ import io.swagger.v3.oas.annotations.Hidden;
   public Map<String, Object> getInsertRequest() {
     
     var request = new LinkedHashMap<String, Object>();
-    request.put("sql", "SELECT norpac_commons.i_rt_type(?,?,?)");
+    request.put("sql", "SELECT norpac_commons.i_rt_type(?,?,?,?)");
+    request.put("idTenant", this.idTenant);
     request.put("name", this.name);
     request.put("description", this.description);
     request.put("createdBy", this.createdBy);
@@ -34,6 +37,14 @@ import io.swagger.v3.oas.annotations.Hidden;
   }
   
   // Getters and Setters...
+    
+  public UUID getIdTenant() {
+    return this.idTenant;
+  }
+    
+  public UUID setIdTenant(UUID idTenant) {
+    return this.idTenant = idTenant;
+  }    
     
   public String getName() {
     return this.name;

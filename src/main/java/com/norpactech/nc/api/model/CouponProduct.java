@@ -13,8 +13,8 @@ import java.util.UUID;
  */
 public class CouponProduct extends BaseModel {
 
-  private UUID idCoupon;
   private UUID idProduct;
+  private UUID idCoupon;
 
   public CouponProduct () {}
   public CouponProduct (Object obj) {
@@ -22,11 +22,11 @@ public class CouponProduct extends BaseModel {
   }
 
   public CouponProduct (
-    UUID idCoupon,
-    UUID idProduct)
+    UUID idProduct,
+    UUID idCoupon)
  {
-    this.idCoupon = idCoupon;
     this.idProduct = idProduct;
+    this.idCoupon = idCoupon;
   }
 
   public static Map<String, Object> queryRequest(Map<String, String> queryParams) throws Exception {
@@ -40,19 +40,19 @@ public class CouponProduct extends BaseModel {
 
   // Getters and Setters...
     
-  public UUID getIdCoupon() {
-    return this.idCoupon;
-  }
-    
-  public UUID setIdCoupon(UUID idCoupon) {
-    return this.idCoupon = idCoupon;
-  }    
-    
   public UUID getIdProduct() {
     return this.idProduct;
   }
     
   public UUID setIdProduct(UUID idProduct) {
     return this.idProduct = idProduct;
+  }    
+    
+  public UUID getIdCoupon() {
+    return this.idCoupon;
+  }
+    
+  public UUID setIdCoupon(UUID idCoupon) {
+    return this.idCoupon = idCoupon;
   }    
 }

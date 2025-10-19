@@ -17,6 +17,7 @@ import java.util.UUID;
 public class RtType extends BaseModel {
 
   private UUID id;
+  private UUID idTenant;
   private String name;
   private String description;
   private Timestamp createdAt;
@@ -32,6 +33,7 @@ public class RtType extends BaseModel {
 
   public RtType (
     UUID id,
+    UUID idTenant,
     String name,
     String description,
     Timestamp createdAt,
@@ -41,6 +43,7 @@ public class RtType extends BaseModel {
     Boolean isActive)
  {
     this.id = id;
+    this.idTenant = idTenant;
     this.name = name;
     this.description = description;
     this.createdAt = createdAt;
@@ -67,6 +70,14 @@ public class RtType extends BaseModel {
     
   public UUID setId(UUID id) {
     return this.id = id;
+  }    
+    
+  public UUID getIdTenant() {
+    return this.idTenant;
+  }
+    
+  public UUID setIdTenant(UUID idTenant) {
+    return this.idTenant = idTenant;
   }    
     
   public String getName() {

@@ -6,7 +6,6 @@ package com.norpactech.nc.api.dto;
  */
 import java.lang.String;
 import java.util.Map;
-import java.util.UUID;
 import java.util.LinkedHashMap;
 import io.swagger.v3.oas.annotations.Hidden;
 
@@ -17,7 +16,6 @@ import io.swagger.v3.oas.annotations.Hidden;
  */
  public class TenantPostApiRequest {
 
-  private UUID idRtOrigin;
   private String name;
   private String createdBy;
 
@@ -27,22 +25,13 @@ import io.swagger.v3.oas.annotations.Hidden;
   public Map<String, Object> getInsertRequest() {
     
     var request = new LinkedHashMap<String, Object>();
-    request.put("sql", "SELECT norpac_commons.i_tenant(?,?,?)");
-    request.put("idRtOrigin", this.idRtOrigin);
+    request.put("sql", "SELECT norpac_commons.i_tenant(?,?)");
     request.put("name", this.name);
     request.put("createdBy", this.createdBy);
     return request;
   }
   
   // Getters and Setters...
-    
-  public UUID getIdRtOrigin() {
-    return this.idRtOrigin;
-  }
-    
-  public UUID setIdRtOrigin(UUID idRtOrigin) {
-    return this.idRtOrigin = idRtOrigin;
-  }    
     
   public String getName() {
     return this.name;

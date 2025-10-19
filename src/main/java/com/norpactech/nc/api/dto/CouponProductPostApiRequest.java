@@ -16,8 +16,8 @@ import io.swagger.v3.oas.annotations.Hidden;
  */
  public class CouponProductPostApiRequest {
 
-  private UUID idCoupon;
   private UUID idProduct;
+  private UUID idCoupon;
 
   public CouponProductPostApiRequest () {}
 
@@ -26,20 +26,12 @@ import io.swagger.v3.oas.annotations.Hidden;
     
     var request = new LinkedHashMap<String, Object>();
     request.put("sql", "SELECT norpac_commons.i_coupon_product(?,?)");
-    request.put("idCoupon", this.idCoupon);
     request.put("idProduct", this.idProduct);
+    request.put("idCoupon", this.idCoupon);
     return request;
   }
   
   // Getters and Setters...
-    
-  public UUID getIdCoupon() {
-    return this.idCoupon;
-  }
-    
-  public UUID setIdCoupon(UUID idCoupon) {
-    return this.idCoupon = idCoupon;
-  }    
     
   public UUID getIdProduct() {
     return this.idProduct;
@@ -47,5 +39,13 @@ import io.swagger.v3.oas.annotations.Hidden;
     
   public UUID setIdProduct(UUID idProduct) {
     return this.idProduct = idProduct;
+  }    
+    
+  public UUID getIdCoupon() {
+    return this.idCoupon;
+  }
+    
+  public UUID setIdCoupon(UUID idCoupon) {
+    return this.idCoupon = idCoupon;
   }    
 }

@@ -17,7 +17,6 @@ import java.util.UUID;
 public class Tenant extends BaseModel {
 
   private UUID id;
-  private UUID idRtOrigin;
   private String name;
   private Timestamp createdAt;
   private String createdBy;
@@ -32,7 +31,6 @@ public class Tenant extends BaseModel {
 
   public Tenant (
     UUID id,
-    UUID idRtOrigin,
     String name,
     Timestamp createdAt,
     String createdBy,
@@ -41,7 +39,6 @@ public class Tenant extends BaseModel {
     Boolean isActive)
  {
     this.id = id;
-    this.idRtOrigin = idRtOrigin;
     this.name = name;
     this.createdAt = createdAt;
     this.createdBy = createdBy;
@@ -67,14 +64,6 @@ public class Tenant extends BaseModel {
     
   public UUID setId(UUID id) {
     return this.id = id;
-  }    
-    
-  public UUID getIdRtOrigin() {
-    return this.idRtOrigin;
-  }
-    
-  public UUID setIdRtOrigin(UUID idRtOrigin) {
-    return this.idRtOrigin = idRtOrigin;
   }    
     
   public String getName() {
