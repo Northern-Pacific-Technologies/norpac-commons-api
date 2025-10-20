@@ -3,8 +3,6 @@ package com.norpactech.nc.service;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.norpactech.nc.service.CognitoService;
-
 import jakarta.annotation.PostConstruct;
 
 @Service
@@ -21,9 +19,12 @@ public class CognitoServiceEx extends CognitoService {
 
   @Value("${cognito.user-pool-client-secret}")
   String userPoolClientSecret;
+ 
+  @Value("${cognito.user-pool-domain}")
+  String userPoolDomain = null;
   
   @PostConstruct
   public void init() {
-    super.init(region, userPoolId, userPoolClientId, userPoolClientSecret);
+    super.init(region, userPoolId, userPoolClientId, userPoolClientSecret, userPoolDomain);
   }    
 }

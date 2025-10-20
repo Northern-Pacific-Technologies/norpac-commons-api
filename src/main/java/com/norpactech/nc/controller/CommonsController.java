@@ -17,13 +17,22 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.norpactech.nc.api.dto.TenantPostApiRequest;
+import com.norpactech.nc.api.model.Tenant;
+import com.norpactech.nc.api.utils.ApiResponse;
 import com.norpactech.nc.config.json.GsonConfig;
+import com.norpactech.nc.repository.BootstrapRepository;
 import com.norpactech.nc.utils.DateUtils;
 import com.norpactech.nc.vo.AboutVO;
 
@@ -48,6 +57,9 @@ public class CommonsController {
   @Autowired
   private DataSource dataSource;
 
+  @Autowired
+  private BootstrapRepository bootstrapRepository;
+  
   @GetMapping("/health")
   public Map<String, String> health() {
     Map<String, String> status = new HashMap<>();
@@ -76,7 +88,7 @@ public class CommonsController {
     aboutVO.setDatabaseSchema(databaseSchema);
     return aboutVO;
   }
-    
+      
   @GetMapping("/auth-test")
   public Map<String, Object> debugAuthentication() {
 
@@ -92,5 +104,35 @@ public class CommonsController {
     result.put("name", auth != null ? auth.getName() : "null");
 
     return result;
+  } 
+    
+  @PostMapping("/tenant/bootstrap")
+  public ResponseEntity<String> postTenant(@RequestBody TenantPostApiRequest request) throws Exception {
+    
+    ApiResponse response = bootstrapRepository.insert(request.getInsertRequest());
+    return ResponseEntity.status(HttpStatus.CREATED).body(gsonConfig.gson().toJson(response));
   }  
+  
+  @GetMapping("/tenant/bootstrap")
+  public ResponseEntity<String> findTenant(@RequestParam Map<String, String> params) throws Exception {
+
+    ApiResponse response = bootstrapRepository.findOne(Tenant.queryRequest(params), Tenant.class);
+    return ResponseEntity.status(HttpStatus.OK).body(gsonConfig.gson().toJson(response));
+  }    
+/*  
+ * TODO: Enable when User model is available in Commons module
+  @GetMapping("/user/bootstrap")
+  public ResponseEntity<String> findUser(@RequestParam Map<String, String> params) throws Exception {
+
+    ApiResponse response = bootstrapRepository.findOne(Tenant.queryRequest(params), User.class);
+    return ResponseEntity.status(HttpStatus.OK).body(gsonConfig.gson().toJson(response));
+  }  
+  
+  @GetMapping("/tenant-user/bootstrap")
+  public ResponseEntity<String> findTenantUser(@RequestParam String email) throws Exception {
+
+    List<TenantUserVO> response = bootstrapRepository.findTenantUser(email);
+    return ResponseEntity.status(HttpStatus.OK).body(gsonConfig.gson().toJson(response));
+  }
+     */
 }

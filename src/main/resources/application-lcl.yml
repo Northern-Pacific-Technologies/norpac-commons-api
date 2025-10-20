@@ -22,3 +22,4 @@ cognito:
   user-pool-id: 'us-west-2_gHVlOsqkP'
   user-pool-client-id: '4sknuarei0bakajuguv1us2mop'
   user-pool-client-secret: ${COGNITO_CLIENT_SECRET}
+  user-pool-domain: https://norpac-commons-dev-auth-154618107123.auth.us-west-2.amazoncognito.com

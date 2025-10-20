@@ -31,30 +31,22 @@ public class SecurityConfig {
         .requestMatchers(
             "/health",
             "/auth-test",
-            "/sign-up",             
-            "/confirm-sign-up", 
-            "/sign-in", 
+            "/m2m-sign-in", 
             "/access-token", 
             "/refresh-token", 
-            "/forgot-password", 
-            "/change-password", 
-            "/resend-code", 
-            "/sign-out", 
-            "/enable-mfa").permitAll()
+            "/sign-out").permitAll()
 
         .requestMatchers(
             "/about", 
             "/tenant/bootstrap")
           .hasAnyAuthority(
             "norpac-super", 
-            "united-bins-admin", 
-            "united-bins-csr-admin")
+            "norpac-commons-admin")
         .requestMatchers("/v*/**").hasAnyAuthority(
             "norpac-super", 
-            "united-bins-admin", 
-            "united-bins-csr-admin", 
-            "united-bins-csr-mgr", 
-            "united-bins-csr-user")
+            "norpac-commons-admin", 
+            "norpac-commons-user",
+            "norpac-commons-read")
         .anyRequest().hasAuthority("norpac-super"))
     .oauth2ResourceServer(oauth2ResourceServer -> oauth2ResourceServer
         .jwt(jwt -> jwt.decoder(jwtDecoder())

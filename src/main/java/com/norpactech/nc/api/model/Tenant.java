@@ -18,6 +18,11 @@ public class Tenant extends BaseModel {
 
   private UUID id;
   private String name;
+  private String description;
+  private String origin;
+  private String originName;
+  private String alias;
+  private String timeZone;
   private Timestamp createdAt;
   private String createdBy;
   private Timestamp updatedAt;
@@ -32,6 +37,11 @@ public class Tenant extends BaseModel {
   public Tenant (
     UUID id,
     String name,
+    String description,
+    String origin,
+    String originName,
+    String alias,
+    String timeZone,
     Timestamp createdAt,
     String createdBy,
     Timestamp updatedAt,
@@ -40,6 +50,11 @@ public class Tenant extends BaseModel {
  {
     this.id = id;
     this.name = name;
+    this.description = description;
+    this.origin = origin;
+    this.originName = originName;
+    this.alias = alias;
+    this.timeZone = timeZone;
     this.createdAt = createdAt;
     this.createdBy = createdBy;
     this.updatedAt = updatedAt;
@@ -72,6 +87,46 @@ public class Tenant extends BaseModel {
     
   public String setName(String name) {
     return this.name = name;
+  }    
+    
+  public String getDescription() {
+    return this.description;
+  }
+    
+  public String setDescription(String description) {
+    return this.description = description;
+  }    
+    
+  public String getOrigin() {
+    return this.origin;
+  }
+    
+  public String setOrigin(String origin) {
+    return this.origin = origin;
+  }    
+    
+  public String getOriginName() {
+    return this.originName;
+  }
+    
+  public String setOriginName(String originName) {
+    return this.originName = originName;
+  }    
+    
+  public String getAlias() {
+    return this.alias;
+  }
+    
+  public String setAlias(String alias) {
+    return this.alias = alias;
+  }    
+    
+  public String getTimeZone() {
+    return this.timeZone;
+  }
+    
+  public String setTimeZone(String timeZone) {
+    return this.timeZone = timeZone;
   }    
     
   public Timestamp getCreatedAt() {
