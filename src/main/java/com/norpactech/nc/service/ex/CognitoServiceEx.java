@@ -1,7 +1,9 @@
-package com.norpactech.nc.service;
+package com.norpactech.nc.service.ex;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import com.norpactech.nc.service.CognitoService;
 
 import jakarta.annotation.PostConstruct;
 
