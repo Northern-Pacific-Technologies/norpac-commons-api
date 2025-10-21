@@ -14,36 +14,30 @@ import io.swagger.v3.oas.annotations.Hidden;
 /**
  * Put API Request
  * 
- * Created product from Import
+ * Created product_category from Import
  */
-public class ProductPutApiRequest {
+public class ProductCategoryPutApiRequest {
 
   private UUID id;
-  private UUID idProductCategory;
-  private UUID idRtProductType;
-  private UUID idRtProductStatus;
-  private String name;
+  private UUID idParentCategory;
   private String code;
+  private String name;
   private String description;
-  private String metadata;
   private Timestamp updatedAt;
   private String updatedBy;
 
-  public ProductPutApiRequest () {}
+  public ProductCategoryPutApiRequest () {}
 
   @Hidden
   public Map<String, Object> getUpdateRequest() {
     
      var request = new LinkedHashMap<String, Object>();
-    request.put("sql", "SELECT norpac_commons.u_product(?,?,?,?,?,?,?,?,?,?)");
+    request.put("sql", "SELECT norpac_commons.u_product_category(?,?,?,?,?,?,?)");
     request.put("id", this.id);
-    request.put("idProductCategory", this.idProductCategory);
-    request.put("idRtProductType", this.idRtProductType);
-    request.put("idRtProductStatus", this.idRtProductStatus);
-    request.put("name", this.name);
+    request.put("idParentCategory", this.idParentCategory);
     request.put("code", this.code);
+    request.put("name", this.name);
     request.put("description", this.description);
-    request.put("metadata", this.metadata);
     request.put("updatedAt", this.updatedAt);
     request.put("updatedBy", this.updatedBy);
     return request;
@@ -59,36 +53,12 @@ public class ProductPutApiRequest {
     return this.id = id;
   }    
     
-  public UUID getIdProductCategory() {
-    return this.idProductCategory;
+  public UUID getIdParentCategory() {
+    return this.idParentCategory;
   }
     
-  public UUID setIdProductCategory(UUID idProductCategory) {
-    return this.idProductCategory = idProductCategory;
-  }    
-    
-  public UUID getIdRtProductType() {
-    return this.idRtProductType;
-  }
-    
-  public UUID setIdRtProductType(UUID idRtProductType) {
-    return this.idRtProductType = idRtProductType;
-  }    
-    
-  public UUID getIdRtProductStatus() {
-    return this.idRtProductStatus;
-  }
-    
-  public UUID setIdRtProductStatus(UUID idRtProductStatus) {
-    return this.idRtProductStatus = idRtProductStatus;
-  }    
-    
-  public String getName() {
-    return this.name;
-  }
-    
-  public String setName(String name) {
-    return this.name = name;
+  public UUID setIdParentCategory(UUID idParentCategory) {
+    return this.idParentCategory = idParentCategory;
   }    
     
   public String getCode() {
@@ -99,20 +69,20 @@ public class ProductPutApiRequest {
     return this.code = code;
   }    
     
+  public String getName() {
+    return this.name;
+  }
+    
+  public String setName(String name) {
+    return this.name = name;
+  }    
+    
   public String getDescription() {
     return this.description;
   }
     
   public String setDescription(String description) {
     return this.description = description;
-  }    
-    
-  public String getMetadata() {
-    return this.metadata;
-  }
-    
-  public String setMetadata(String metadata) {
-    return this.metadata = metadata;
   }    
     
   public Timestamp getUpdatedAt() {

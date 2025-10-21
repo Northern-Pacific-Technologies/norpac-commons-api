@@ -12,40 +12,34 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- * API Model Class: Product - Created product from Import
+ * API Model Class: ProductCategory - Created product_category from Import
  */
-public class Product extends BaseModel {
+public class ProductCategory extends BaseModel {
 
   private UUID id;
   private UUID idTenant;
-  private UUID idProductCategory;
-  private UUID idRtProductType;
-  private UUID idRtProductStatus;
-  private String name;
+  private UUID idParentCategory;
   private String code;
+  private String name;
   private String description;
-  private String metadata;
   private Timestamp createdAt;
   private String createdBy;
   private Timestamp updatedAt;
   private String updatedBy;
   private Boolean isActive;
 
-  public Product () {}
-  public Product (Object obj) {
+  public ProductCategory () {}
+  public ProductCategory (Object obj) {
     super(obj);
   }
 
-  public Product (
+  public ProductCategory (
     UUID id,
     UUID idTenant,
-    UUID idProductCategory,
-    UUID idRtProductType,
-    UUID idRtProductStatus,
-    String name,
+    UUID idParentCategory,
     String code,
+    String name,
     String description,
-    String metadata,
     Timestamp createdAt,
     String createdBy,
     Timestamp updatedAt,
@@ -54,13 +48,10 @@ public class Product extends BaseModel {
  {
     this.id = id;
     this.idTenant = idTenant;
-    this.idProductCategory = idProductCategory;
-    this.idRtProductType = idRtProductType;
-    this.idRtProductStatus = idRtProductStatus;
-    this.name = name;
+    this.idParentCategory = idParentCategory;
     this.code = code;
+    this.name = name;
     this.description = description;
-    this.metadata = metadata;
     this.createdAt = createdAt;
     this.createdBy = createdBy;
     this.updatedAt = updatedAt;
@@ -70,10 +61,10 @@ public class Product extends BaseModel {
 
   public static Map<String, Object> queryRequest(Map<String, String> queryParams) throws Exception {
     
-    var matchedParams = paramMatcher(queryParams, Product.class);
+    var matchedParams = paramMatcher(queryParams, ProductCategory.class);
     matchedParams.put("sql", 
-      "SELECT norpac_commons.product.* " + 
-      "FROM norpac_commons.product");
+      "SELECT norpac_commons.product_category.* " + 
+      "FROM norpac_commons.product_category");
     return matchedParams;
   }
 
@@ -95,36 +86,12 @@ public class Product extends BaseModel {
     return this.idTenant = idTenant;
   }    
     
-  public UUID getIdProductCategory() {
-    return this.idProductCategory;
+  public UUID getIdParentCategory() {
+    return this.idParentCategory;
   }
     
-  public UUID setIdProductCategory(UUID idProductCategory) {
-    return this.idProductCategory = idProductCategory;
-  }    
-    
-  public UUID getIdRtProductType() {
-    return this.idRtProductType;
-  }
-    
-  public UUID setIdRtProductType(UUID idRtProductType) {
-    return this.idRtProductType = idRtProductType;
-  }    
-    
-  public UUID getIdRtProductStatus() {
-    return this.idRtProductStatus;
-  }
-    
-  public UUID setIdRtProductStatus(UUID idRtProductStatus) {
-    return this.idRtProductStatus = idRtProductStatus;
-  }    
-    
-  public String getName() {
-    return this.name;
-  }
-    
-  public String setName(String name) {
-    return this.name = name;
+  public UUID setIdParentCategory(UUID idParentCategory) {
+    return this.idParentCategory = idParentCategory;
   }    
     
   public String getCode() {
@@ -135,20 +102,20 @@ public class Product extends BaseModel {
     return this.code = code;
   }    
     
+  public String getName() {
+    return this.name;
+  }
+    
+  public String setName(String name) {
+    return this.name = name;
+  }    
+    
   public String getDescription() {
     return this.description;
   }
     
   public String setDescription(String description) {
     return this.description = description;
-  }    
-    
-  public String getMetadata() {
-    return this.metadata;
-  }
-    
-  public String setMetadata(String metadata) {
-    return this.metadata = metadata;
   }    
     
   public Timestamp getCreatedAt() {

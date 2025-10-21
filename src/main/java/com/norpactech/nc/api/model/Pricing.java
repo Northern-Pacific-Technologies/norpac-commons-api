@@ -25,6 +25,8 @@ public class Pricing extends BaseModel {
   private UUID idRtBillingPeriod;
   private UUID idRtCurrencyCode;
   private Double amount;
+  private Double ratePerUnit;
+  private Double minimumCharge;
   private LocalDateTime validFrom;
   private LocalDateTime validTo;
   private Gson metadata;
@@ -46,6 +48,8 @@ public class Pricing extends BaseModel {
     UUID idRtBillingPeriod,
     UUID idRtCurrencyCode,
     Double amount,
+    Double ratePerUnit,
+    Double minimumCharge,
     LocalDateTime validFrom,
     LocalDateTime validTo,
     Gson metadata,
@@ -61,6 +65,8 @@ public class Pricing extends BaseModel {
     this.idRtBillingPeriod = idRtBillingPeriod;
     this.idRtCurrencyCode = idRtCurrencyCode;
     this.amount = amount;
+    this.ratePerUnit = ratePerUnit;
+    this.minimumCharge = minimumCharge;
     this.validFrom = validFrom;
     this.validTo = validTo;
     this.metadata = metadata;
@@ -128,6 +134,22 @@ public class Pricing extends BaseModel {
     
   public Double setAmount(Double amount) {
     return this.amount = amount;
+  }    
+    
+  public Double getRatePerUnit() {
+    return this.ratePerUnit;
+  }
+    
+  public Double setRatePerUnit(Double ratePerUnit) {
+    return this.ratePerUnit = ratePerUnit;
+  }    
+    
+  public Double getMinimumCharge() {
+    return this.minimumCharge;
+  }
+    
+  public Double setMinimumCharge(Double minimumCharge) {
+    return this.minimumCharge = minimumCharge;
   }    
     
   public LocalDateTime getValidFrom() {

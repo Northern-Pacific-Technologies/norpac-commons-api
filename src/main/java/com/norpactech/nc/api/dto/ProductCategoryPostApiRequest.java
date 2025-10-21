@@ -13,35 +13,29 @@ import io.swagger.v3.oas.annotations.Hidden;
 /**
  * Post API Request
  * 
- * Created product from Import
+ * Created product_category from Import
  */
- public class ProductPostApiRequest {
+ public class ProductCategoryPostApiRequest {
 
   private UUID idTenant;
-  private UUID idProductCategory;
-  private UUID idRtProductType;
-  private UUID idRtProductStatus;
-  private String name;
+  private UUID idParentCategory;
   private String code;
+  private String name;
   private String description;
-  private String metadata;
   private String createdBy;
 
-  public ProductPostApiRequest () {}
+  public ProductCategoryPostApiRequest () {}
 
   @Hidden
   public Map<String, Object> getInsertRequest() {
     
     var request = new LinkedHashMap<String, Object>();
-    request.put("sql", "SELECT norpac_commons.i_product(?,?,?,?,?,?,?,?,?)");
+    request.put("sql", "SELECT norpac_commons.i_product_category(?,?,?,?,?,?)");
     request.put("idTenant", this.idTenant);
-    request.put("idProductCategory", this.idProductCategory);
-    request.put("idRtProductType", this.idRtProductType);
-    request.put("idRtProductStatus", this.idRtProductStatus);
-    request.put("name", this.name);
+    request.put("idParentCategory", this.idParentCategory);
     request.put("code", this.code);
+    request.put("name", this.name);
     request.put("description", this.description);
-    request.put("metadata", this.metadata);
     request.put("createdBy", this.createdBy);
     return request;
   }
@@ -56,36 +50,12 @@ import io.swagger.v3.oas.annotations.Hidden;
     return this.idTenant = idTenant;
   }    
     
-  public UUID getIdProductCategory() {
-    return this.idProductCategory;
+  public UUID getIdParentCategory() {
+    return this.idParentCategory;
   }
     
-  public UUID setIdProductCategory(UUID idProductCategory) {
-    return this.idProductCategory = idProductCategory;
-  }    
-    
-  public UUID getIdRtProductType() {
-    return this.idRtProductType;
-  }
-    
-  public UUID setIdRtProductType(UUID idRtProductType) {
-    return this.idRtProductType = idRtProductType;
-  }    
-    
-  public UUID getIdRtProductStatus() {
-    return this.idRtProductStatus;
-  }
-    
-  public UUID setIdRtProductStatus(UUID idRtProductStatus) {
-    return this.idRtProductStatus = idRtProductStatus;
-  }    
-    
-  public String getName() {
-    return this.name;
-  }
-    
-  public String setName(String name) {
-    return this.name = name;
+  public UUID setIdParentCategory(UUID idParentCategory) {
+    return this.idParentCategory = idParentCategory;
   }    
     
   public String getCode() {
@@ -96,20 +66,20 @@ import io.swagger.v3.oas.annotations.Hidden;
     return this.code = code;
   }    
     
+  public String getName() {
+    return this.name;
+  }
+    
+  public String setName(String name) {
+    return this.name = name;
+  }    
+    
   public String getDescription() {
     return this.description;
   }
     
   public String setDescription(String description) {
     return this.description = description;
-  }    
-    
-  public String getMetadata() {
-    return this.metadata;
-  }
-    
-  public String setMetadata(String metadata) {
-    return this.metadata = metadata;
   }    
     
   public String getCreatedBy() {

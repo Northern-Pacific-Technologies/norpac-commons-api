@@ -27,6 +27,8 @@ public class PricingPutApiRequest {
   private UUID idRtBillingPeriod;
   private UUID idRtCurrencyCode;
   private Double amount;
+  private Double ratePerUnit;
+  private Double minimumCharge;
   private LocalDateTime validFrom;
   private LocalDateTime validTo;
   private Gson metadata;
@@ -39,13 +41,15 @@ public class PricingPutApiRequest {
   public Map<String, Object> getUpdateRequest() {
     
      var request = new LinkedHashMap<String, Object>();
-    request.put("sql", "SELECT norpac_commons.u_pricing(?,?,?,?,?,?,?,?,?,?,?)");
+    request.put("sql", "SELECT norpac_commons.u_pricing(?,?,?,?,?,?,?,?,?,?,?,?,?)");
     request.put("id", this.id);
     request.put("idProduct", this.idProduct);
     request.put("idRtPricingType", this.idRtPricingType);
     request.put("idRtBillingPeriod", this.idRtBillingPeriod);
     request.put("idRtCurrencyCode", this.idRtCurrencyCode);
     request.put("amount", this.amount);
+    request.put("ratePerUnit", this.ratePerUnit);
+    request.put("minimumCharge", this.minimumCharge);
     request.put("validFrom", this.validFrom);
     request.put("validTo", this.validTo);
     request.put("metadata", this.metadata);
@@ -102,6 +106,22 @@ public class PricingPutApiRequest {
     
   public Double setAmount(Double amount) {
     return this.amount = amount;
+  }    
+    
+  public Double getRatePerUnit() {
+    return this.ratePerUnit;
+  }
+    
+  public Double setRatePerUnit(Double ratePerUnit) {
+    return this.ratePerUnit = ratePerUnit;
+  }    
+    
+  public Double getMinimumCharge() {
+    return this.minimumCharge;
+  }
+    
+  public Double setMinimumCharge(Double minimumCharge) {
+    return this.minimumCharge = minimumCharge;
   }    
     
   public LocalDateTime getValidFrom() {

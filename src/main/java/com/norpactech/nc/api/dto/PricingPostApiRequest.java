@@ -25,6 +25,8 @@ import io.swagger.v3.oas.annotations.Hidden;
   private UUID idRtBillingPeriod;
   private UUID idRtCurrencyCode;
   private Double amount;
+  private Double ratePerUnit;
+  private Double minimumCharge;
   private LocalDateTime validFrom;
   private LocalDateTime validTo;
   private Gson metadata;
@@ -36,12 +38,14 @@ import io.swagger.v3.oas.annotations.Hidden;
   public Map<String, Object> getInsertRequest() {
     
     var request = new LinkedHashMap<String, Object>();
-    request.put("sql", "SELECT norpac_commons.i_pricing(?,?,?,?,?,?,?,?,?)");
+    request.put("sql", "SELECT norpac_commons.i_pricing(?,?,?,?,?,?,?,?,?,?,?)");
     request.put("idProduct", this.idProduct);
     request.put("idRtPricingType", this.idRtPricingType);
     request.put("idRtBillingPeriod", this.idRtBillingPeriod);
     request.put("idRtCurrencyCode", this.idRtCurrencyCode);
     request.put("amount", this.amount);
+    request.put("ratePerUnit", this.ratePerUnit);
+    request.put("minimumCharge", this.minimumCharge);
     request.put("validFrom", this.validFrom);
     request.put("validTo", this.validTo);
     request.put("metadata", this.metadata);
@@ -89,6 +93,22 @@ import io.swagger.v3.oas.annotations.Hidden;
     
   public Double setAmount(Double amount) {
     return this.amount = amount;
+  }    
+    
+  public Double getRatePerUnit() {
+    return this.ratePerUnit;
+  }
+    
+  public Double setRatePerUnit(Double ratePerUnit) {
+    return this.ratePerUnit = ratePerUnit;
+  }    
+    
+  public Double getMinimumCharge() {
+    return this.minimumCharge;
+  }
+    
+  public Double setMinimumCharge(Double minimumCharge) {
+    return this.minimumCharge = minimumCharge;
   }    
     
   public LocalDateTime getValidFrom() {
