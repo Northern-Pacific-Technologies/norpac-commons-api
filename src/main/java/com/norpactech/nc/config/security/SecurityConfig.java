@@ -1,4 +1,5 @@
 package com.norpactech.nc.config.security;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +14,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.List;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -26,65 +29,93 @@ public class SecurityConfig {
   @Bean
   SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
-    .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-        // public end points - no authentication required
+      .authorizeHttpRequests(authz -> authz
+        // public endpoints
         .requestMatchers(
             "/health",
             "/auth-test",
-            "/m2m-sign-in", 
-            "/access-token", 
-            "/refresh-token", 
-            "/sign-out").permitAll()
+            "/m2m-sign-in",
+            "/access-token",
+            "/refresh-token",
+            "/sign-out"
+        ).permitAll()
 
-        .requestMatchers(
-            "/about", 
-            "/tenant/bootstrap")
+        // tenant bootstrap or other restricted endpoints
+        .requestMatchers("/about", "/tenant/bootstrap")
           .hasAnyAuthority(
-            "norpac-super", 
-            "norpac-commons-admin")
-        .requestMatchers("/v*/**").hasAnyAuthority(
-            "norpac-super", 
-            "norpac-commons-admin", 
-            "norpac-commons-user",
-            "norpac-commons-read")
-        .anyRequest().hasAuthority("norpac-super"))
-    .oauth2ResourceServer(oauth2ResourceServer -> oauth2ResourceServer
-        .jwt(jwt -> jwt.decoder(jwtDecoder())
-            .jwtAuthenticationConverter(jwtAuthenticationConverter())))
-    .csrf(csrf -> csrf.disable())
-    .cors(cors -> cors.configurationSource(corsConfigurationSource()));
+              "SCOPE_norpac-commons-api/super",
+              "SCOPE_norpac-commons-api/admin"
+          )
+        // v1, v2... APIs
+        .requestMatchers("/v*/**")
+          .hasAnyAuthority(
+              "SCOPE_norpac-commons-api/admin",
+              "SCOPE_norpac-commons-api/read",
+              "SCOPE_norpac-commons-api/write"
+          )
+        .anyRequest().authenticated()
+      )
+      .oauth2ResourceServer(oauth2 -> oauth2
+        .jwt(jwt -> jwt
+          .decoder(jwtDecoder())
+          .jwtAuthenticationConverter(jwtAuthenticationConverter())
+        )
+      )
+      .csrf(csrf -> csrf.disable())
+      .cors(cors -> cors.configurationSource(corsConfigurationSource()));
+
     return http.build();
   }
 
   @Bean
   JwtAuthenticationConverter jwtAuthenticationConverter() {
-    JwtGrantedAuthoritiesConverter authoritiesConverter = new JwtGrantedAuthoritiesConverter();
-    authoritiesConverter.setAuthorityPrefix("");
-    authoritiesConverter.setAuthoritiesClaimName("cognito:groups");
+    // Convert "cognito:groups" for user tokens
+    JwtGrantedAuthoritiesConverter groupsConverter = new JwtGrantedAuthoritiesConverter();
+    groupsConverter.setAuthorityPrefix("");
+    groupsConverter.setAuthoritiesClaimName("cognito:groups");
 
-    JwtAuthenticationConverter jwtConverter = new JwtAuthenticationConverter();
-    jwtConverter.setJwtGrantedAuthoritiesConverter(authoritiesConverter);
-    return jwtConverter;
+    // Convert "scope" for client credentials tokens
+    JwtGrantedAuthoritiesConverter scopeConverter = new JwtGrantedAuthoritiesConverter();
+    scopeConverter.setAuthorityPrefix("SCOPE_");
+    scopeConverter.setAuthoritiesClaimName("scope");
+
+    // Compose both
+    JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
+    converter.setJwtGrantedAuthoritiesConverter(jwt -> {
+      if (jwt.hasClaim("cognito:groups")) {
+        return groupsConverter.convert(jwt);
+      } else {
+        return scopeConverter.convert(jwt);
+      }
+    });
+
+    return converter;
   }
 
   @Bean
   CorsConfigurationSource corsConfigurationSource() {
-      CorsConfiguration configuration = new CorsConfiguration();
-      configuration.addAllowedOrigin("http://localhost:4200");
-      configuration.addAllowedOrigin("https://dev.unitedbins.com/");
-      configuration.addAllowedOrigin("https://www.unitedbins.com/");
-      configuration.addAllowedHeader("*");
-      configuration.addAllowedMethod("*");
-      configuration.setAllowCredentials(true);
+    CorsConfiguration configuration = new CorsConfiguration();
+    configuration.setAllowedOrigins(List.of(
+      "http://localhost:4200",
+      "https://dev.unitedbins.com",
+      "https://www.unitedbins.com"
+    ));
+    configuration.addAllowedHeader("*");
+    configuration.addAllowedMethod("*");
+    configuration.setAllowCredentials(true);
 
-      UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-      source.registerCorsConfiguration("/**", configuration);
-      return source;
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", configuration);
+    return source;
   }
 
   @Bean
   JwtDecoder jwtDecoder() {
-    String jwkSetUri = String.format("https://cognito-idp.%s.amazonaws.com/%s/.well-known/jwks.json", cognitoRegion, userPoolId);
+    String jwkSetUri = String.format(
+      "https://cognito-idp.%s.amazonaws.com/%s/.well-known/jwks.json",
+      cognitoRegion,
+      userPoolId
+    );
     return NimbusJwtDecoder.withJwkSetUri(jwkSetUri).build();
   }
 }
