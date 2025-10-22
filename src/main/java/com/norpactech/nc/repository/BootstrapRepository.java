@@ -1,6 +1,4 @@
 package com.norpactech.nc.repository;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 /**
  * © 2025 Northern Pacific Technologies, LLC. All Rights Reserved. 
  *  
@@ -13,7 +11,6 @@ import java.util.Map;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.nimbusds.jose.shaded.gson.Gson;
@@ -21,7 +18,6 @@ import com.norpactech.nc.api.utils.ApiResponse;
 import com.norpactech.nc.api.utils.ParseUtils;
 import com.norpactech.nc.api.utils.PgsqlExecResponse;
 import com.norpactech.nc.utils.TextUtils;
-import com.norpactech.nc.vo.TenantUserVO;
 
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
@@ -104,27 +100,4 @@ public class BootstrapRepository {
       return new ApiResponse((Exception) e);
     }
   } 
-  
-  public List<TenantUserVO> findTenantUser(String email) {
-    
-    String sql = "SELECT * " +
-                   "FROM united_bins.v_tenant_user " +
-                  "WHERE LOWER(email) = LOWER(?) " +
-                  "ORDER BY tenant_name";
-    
-    return jdbcTemplate.query(sql, new RowMapper<TenantUserVO>() {
-      @Override
-      public TenantUserVO mapRow(ResultSet rs, int rowNum) throws SQLException {
-          TenantUserVO vo = null;
-          try {
-            vo = new TenantUserVO(rs);
-          } 
-          catch (Exception e) {
-            log.error("Exception on TenantUserVO mapRow - {}", ParseUtils.stackTrace(e));
-            throw new SQLException(e);
-          }
-          return vo;
-      }
-    }, email);
-  }
 }
