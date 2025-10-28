@@ -25,8 +25,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.norpactech.nc.api.dto.TenantOriginPostApiRequest;
 import com.norpactech.nc.api.dto.TenantPostApiRequest;
 import com.norpactech.nc.api.model.Tenant;
+import com.norpactech.nc.api.model.TenantOrigin;
 import com.norpactech.nc.api.utils.ApiResponse;
 import com.norpactech.nc.config.json.GsonConfig;
 import com.norpactech.nc.repository.BootstrapRepository;
@@ -103,12 +105,26 @@ public class CommonsController {
     return result;
   } 
     
+  @PostMapping("/tenant-origin/bootstrap")
+  public ResponseEntity<String> postTenantOrigin(@RequestBody TenantOriginPostApiRequest request) throws Exception {
+    
+    ApiResponse response = bootstrapRepository.insert(request.getInsertRequest());
+    return ResponseEntity.status(HttpStatus.CREATED).body(gsonConfig.gson().toJson(response));
+  }  
+  
   @PostMapping("/tenant/bootstrap")
   public ResponseEntity<String> postTenant(@RequestBody TenantPostApiRequest request) throws Exception {
     
     ApiResponse response = bootstrapRepository.insert(request.getInsertRequest());
     return ResponseEntity.status(HttpStatus.CREATED).body(gsonConfig.gson().toJson(response));
   }  
+  
+  @GetMapping("/tenant-origin/bootstrap")
+  public ResponseEntity<String> findTenantOrigin(@RequestParam Map<String, String> params) throws Exception {
+
+    ApiResponse response = bootstrapRepository.findOne(TenantOrigin.queryRequest(params), TenantOrigin.class);
+    return ResponseEntity.status(HttpStatus.OK).body(gsonConfig.gson().toJson(response));
+  }    
   
   @GetMapping("/tenant/bootstrap")
   public ResponseEntity<String> findTenant(@RequestParam Map<String, String> params) throws Exception {
